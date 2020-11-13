@@ -1,5 +1,12 @@
 class BoardsController < ApplicationController
   def index
+    @boards = Board.all
+  end
+
+  def show
+    @board = Board.find(params[:id])
+    # Board.find_by(id: 1)
+    # Board.find_by!(id: 1)
   end
 
   def new
@@ -11,10 +18,24 @@ class BoardsController < ApplicationController
     @board = Board.new(clean_params)
 
     if @board.save
-      # flash["notice"] = "成功新增看板"
       redirect_to "/", notice: '成功新增看板'
     else
       render :new
+    end
+  end
+
+  def edit
+    @board = Board.find(params[:id])
+  end
+
+  def update
+    @board = Board.find(params[:id])
+    clean_params = params.require(:board).permit(:title)
+
+    if @board.update(clean_params)
+      redirect_to root_path, notice: '更新成功'
+    else
+      render :edit
     end
   end
 end
