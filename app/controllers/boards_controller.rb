@@ -1,12 +1,11 @@
 class BoardsController < ApplicationController
+  before_action :find_board, only: [:show, :edit, :update, :destroy]
+
   def index
     @boards = Board.all
   end
 
   def show
-    @board = Board.find(params[:id])
-    # Board.find_by(id: 1)
-    # Board.find_by!(id: 1)
   end
 
   def new
@@ -14,8 +13,7 @@ class BoardsController < ApplicationController
   end
 
   def create
-    clean_params = params.require(:board).permit(:title)
-    @board = Board.new(clean_params)
+    @board = Board.new(board_params)
 
     if @board.save
       redirect_to "/", notice: '成功新增看板'
@@ -25,14 +23,10 @@ class BoardsController < ApplicationController
   end
 
   def edit
-    @board = Board.find(params[:id])
   end
 
   def update
-    @board = Board.find(params[:id])
-    clean_params = params.require(:board).permit(:title)
-
-    if @board.update(clean_params)
+    if @board.update(board_params)
       redirect_to root_path, notice: '更新成功'
     else
       render :edit
@@ -40,8 +34,16 @@ class BoardsController < ApplicationController
   end
 
   def destroy
-    @board = Board.find(params[:id])
     @board.destroy
     redirect_to root_path, notice: '看板已刪除'
+  end
+
+  private
+  def find_board
+    @board = Board.find(params[:id])
+  end
+
+  def board_params
+    params.require(:board).permit(:title)
   end
 end
