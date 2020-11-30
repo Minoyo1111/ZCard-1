@@ -4,6 +4,8 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show]
 
   def show
+    @comment = Comment.new
+    @comments = @post.comments.includes(:user)
   end
 
   def new
