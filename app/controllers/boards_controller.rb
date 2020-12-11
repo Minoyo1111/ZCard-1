@@ -14,7 +14,8 @@ class BoardsController < ApplicationController
   end
 
   def create
-    @board = Board.new(board_params)
+    # @board = Board.new(board_params)
+    @board = current_user.boards.new(board_params)
 
     if @board.save
       redirect_to "/", notice: '成功新增看板'
@@ -40,6 +41,7 @@ class BoardsController < ApplicationController
   end
 
   def hide
+    authorize @board, :hide?
     @board.hide! if @board.may_hide?
     redirect_to boards_path, notice: '看板己隱藏'
   end
