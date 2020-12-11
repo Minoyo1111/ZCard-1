@@ -1,10 +1,10 @@
-<h2>
+<h2 data-controller="favorite" data-favorite-id="<%= @post.id %>">
   <% if user_signed_in? %>
-    <%= link_to '#', id: 'favorite_btn', data: { id: @post.id } do %>
+    <%= link_to '#', data: { action: 'favorite#go' } do %>
       <% if current_user.favorite?(@post) %>
-        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart" data-target="favorite.icon"></i>
       <% else %>
-        <i class="far fa-heart"></i>
+        <i class="far fa-heart" data-target="favorite.icon"></i>
       <% end %>
     <% end %>
   <% end %>
