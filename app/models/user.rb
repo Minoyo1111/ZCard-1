@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :boards
   has_many :posts
   has_many :comments
+  has_many :orders
 
   has_many :favorite_posts
   has_many :my_favorites, through: :favorite_posts, source: 'post'

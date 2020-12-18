@@ -1,0 +1,18 @@
+<h1>結帳</h1>
+
+<%= render 'cart', cart: current_cart %>
+
+<%= form_for(@order) do |form| %>
+  <div>
+    <%= form.label :username%>
+    <%= form.text_field :username%>
+  </div>
+  <div>
+    <%= form.label :tel%>
+    <%= form.text_field :tel%>
+  </div>
+  <div>
+    <%= form.label :address%>
+    <%= form.text_field :address%>
+  </div>
+<% end %>

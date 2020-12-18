@@ -16,4 +16,8 @@ class CartsController < ApplicationController
     session[:cart9527] = nil
     redirect_to pricing_path, notice: '購物車已清除'
   end
+
+  def checkout
+    @order = Order.new
+  end
 end

@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   root 'boards#index'
   get 'pricing', to: 'pages#pricing'
 
+  resources :orders, only: [:index, :show, :create, :destroy]
+
   resource :cart, only: [:show, :destroy] do
     post 'add_item/:id', action: 'add_item', as: 'add_item'
+    get :checkout
   end
 
   resource :users, controller: 'registrations', only: [:create, :edit, :update] do
