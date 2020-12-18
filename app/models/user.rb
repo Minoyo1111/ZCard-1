@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include AASM
+
   validates :email, presence: true,
                     uniqueness: true,
                     format: { with: /[\w]+@([\w-]+\.)+[\w-]{2,4}/ }
@@ -23,6 +25,19 @@ class User < ApplicationRecord
 
   def favorite?(post)
     my_favorites.include?(post)
+  end
+
+  aasm(column: 'state', no_direct_assignment: true) do
+    state :user, initial: true
+    state :vip, :vvip
+
+    event :pay_vip do
+      transitions from: :user, to: :vip
+    end
+
+    event :pay_vvip do
+      transitions from: [:user, :vip], to: :vvip
+    end
   end
 
   private
